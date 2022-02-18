@@ -20,8 +20,10 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
-@Table(name = "professor_allocation")
+@Table(name = "allocation_professor")
 public class Allocation {
 	
 	@Id
@@ -43,6 +45,14 @@ public class Allocation {
     @Column(name = "end", nullable = false)
 	private Date end;
 	
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(name = "professor_id", nullable = false)
+    private Long professorId;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(name = "course_id", nullable = false)
+    private Long courseId;
+	
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "course_id", nullable = false, insertable = false, updatable = false)
@@ -50,7 +60,7 @@ public class Allocation {
 	
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "allocation_id", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "professor_id", nullable = false, insertable = false, updatable = false)
 	private Professor professor;
 	
 	public Long getId() {
@@ -89,22 +99,20 @@ public class Allocation {
 	public void setProfessor(Professor professor) {
 		this.professor = professor;
 	}
-	@Override
-	public String toString() {
-		return "Allocation [id=" + id + ", day=" + day + ", start=" + start + ", end=" + end + ", course=" + course
-				+ ", professorId=" + professor + "]";
+	public Long getProfessorId() {
+		return professorId;
 	}
-	public Allocation(DayOfWeek day, Date start, Date end, Course course, Professor professor) {
-		this.day = day;
-		this.start = start;
-		this.end = end;
-		this.course = course;
-		this.professor = professor;
+	public void setProfessorId(Long professorId) {
+		this.professorId = professorId;
+	}
+	public Long getCourseId() {
+		return courseId;
+	}
+	public void setCourseId(Long courseId) {
+		this.courseId = courseId;
 	}
 	
-	public Allocation() {
-		
-	}
+	
 	
 	
 

@@ -10,7 +10,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 
-import com.project.professor.allocation.victor.entity.Departament;
 import com.project.professor.allocation.victor.entity.Professor;
 
 
@@ -41,56 +40,48 @@ public class ProfessorRepositoryTest {
         System.out.println(professor);
     }
 
-    @Test
-    public void findByNameContainingIgnoreCase() {
-  
-        String name = "Professor";
-
-        List<Professor> professors = professorRepository.findByNameContainingIgnoreCase(name);
-
-        professors.forEach(System.out::println);
-    }
+ 
 
     @Test
     public void findByDepartmentId() {
     
         Long departmentId = 1L;
 
-        List<Professor> professors = professorRepository.findByDepartamentoId(departmentId);
+     
+        List<Professor> professors = professorRepository.findByDepartmentId(departmentId);
 
         professors.forEach(System.out::println);
     }
     
     @Test
     public void save_create() {
-    	
-    	Departament departmanet = new Departament();
-
+        // Arrange
         Professor professor = new Professor();
         professor.setId(null);
         professor.setName("Professor 1");
         professor.setCpf("111.111.111-11");
-        professor.setDepartment(departmanet);
+        professor.setDepartmentId(1L);
 
-
+  
         professor = professorRepository.save(professor);
+
 
         System.out.println(professor);
     }
 
     @Test
     public void save_update() {
-        
-    	Departament departmanet = new Departament();
-    	
+   
         Professor professor = new Professor();
         professor.setId(1L);
         professor.setName("Professor 2");
         professor.setCpf("222.222.222-22");
-        professor.setDepartment(departmanet);
+        professor.setDepartmentId(1L);
 
+    
         professor = professorRepository.save(professor);
 
+    
         System.out.println(professor);
     }
 
@@ -104,7 +95,7 @@ public class ProfessorRepositoryTest {
 
     @Test
     public void deleteAll() {
-        // Act
+   
         professorRepository.deleteAllInBatch();
     }
 

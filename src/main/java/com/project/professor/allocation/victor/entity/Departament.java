@@ -25,6 +25,9 @@ public class Departament {
 	@OneToMany(mappedBy = "department")
     private List<Professor> professors;
 	
+	
+	
+	
 	public List<Professor> getProfessors() {
 		return professors;
 	}

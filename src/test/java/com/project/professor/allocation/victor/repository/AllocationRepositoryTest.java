@@ -15,8 +15,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 
 import com.project.professor.allocation.victor.entity.Allocation;
-import com.project.professor.allocation.victor.entity.Course;
-import com.project.professor.allocation.victor.entity.Professor;
 
 
 @DataJpaTest
@@ -37,17 +35,23 @@ public class AllocationRepositoryTest {
 
 		allocations.forEach(System.out::println);
 	}
-
-	@Test
-	public void findByProfessorId() {
 	
-		Long professorId = 1L;
-		
-		List<Allocation> allocations = allocationRepository.findByProfessorId(professorId);
+	 @Test
+	    public void findById() {
+	        Long id = 1L;
+	        Allocation allocation = allocationRepository.findById(id).orElse(null);
 
-		allocations.forEach(System.out::println);
-	}
+	        System.out.println(allocation);
+	    }
 
+	 @Test
+	    public void findByProfessorId() {
+	        Long professorId = 1L;
+
+	        List<Allocation> allocations = allocationRepository.findByProfessorId(professorId);
+
+	        allocations.forEach(System.out::println);
+	    }
 	@Test
 	public void findByCourseId() {
 
@@ -58,46 +62,38 @@ public class AllocationRepositoryTest {
 		allocations.forEach(System.out::println);
 	}
 
-	@Test
-	public void save_create() throws ParseException {
+    @Test
+    public void save_create() throws ParseException {
+        // Arrange
+        Allocation allocation = new Allocation();
+        allocation.setId(null);
+        allocation.setDay(DayOfWeek.SUNDAY);
+        allocation.setStart(sdf.parse("17:00-0300"));
+        allocation.setEnd(sdf.parse("18:00-0300"));
+        allocation.setProfessorId(1L);
+        allocation.setCourseId(1L);
 
+  
+        allocation = allocationRepository.save(allocation);
 
-		Professor professor = new Professor();
-		Course course = new Course();
+        System.out.println(allocation);
+    }
 
-		Allocation allocation = new Allocation();
-		allocation.setId(null);
-		allocation.setDay(DayOfWeek.SUNDAY);
-		allocation.setStart(sdf.parse("17:00-0300"));
-		allocation.setEnd(sdf.parse("18:00-0300"));
-		allocation.setProfessor(professor);
-		allocation.setCourse(course);
+    @Test
+    public void save_update() throws ParseException {
+ 
+        Allocation allocation = new Allocation();
+        allocation.setId(1L);
+        allocation.setDay(DayOfWeek.MONDAY);
+        allocation.setStart(sdf.parse("19:00-0300"));
+        allocation.setEnd(sdf.parse("20:00-0300"));
+        allocation.setProfessorId(1L);
+        allocation.setCourseId(1L);
 
-		allocation = allocationRepository.save(allocation);
+        allocation = allocationRepository.save(allocation);
 
-		System.out.println(allocation);
-	}
-
-	@Test
-	public void save_update() throws ParseException {
-		Professor professor = new Professor();
-
-		Course couse = new Course();
-		// Arrange
-		Allocation allocation = new Allocation();
-		allocation.setId(1L);
-		allocation.setDay(DayOfWeek.MONDAY);
-		allocation.setStart(sdf.parse("19:00-0300"));
-		allocation.setEnd(sdf.parse("20:00-0300"));
-		allocation.setProfessor(professor);
-		allocation.setCourse(couse);
-
-		
-		allocation = allocationRepository.save(allocation);
-
-		
-		System.out.println(allocation);
-	}
+        System.out.println(allocation);
+    }
 
 	@Test
 	public void deleteById() {

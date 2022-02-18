@@ -15,39 +15,42 @@ import javax.persistence.Table;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Table(name = "professor")
 public class Professor {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(name = "name", nullable = false)
 	private String name;
-	
+
 	@Column(name = "cpf", unique = true, nullable = false, length = 14)
 	private String cpf;
-	
-	
-	
-	//id departamento?? não era apra ser um departament?? isso fala que vai remover em cascata todos os professores quando o departamento for removivo
+
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@Column(name = "department_id", nullable = false)
+	private Long departmentId;
+
+	// id departamento?? não era apra ser um departament?? isso fala que vai remover
+	// em cascata todos os professores quando o departamento for removivo
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "department_id", nullable = false, insertable = false, updatable = false)
 	private Departament department;
-	
+
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@OneToMany(mappedBy = "professor")
-	private List<Allocation> allocation;
-	
-	
-	public List<Allocation> getAllocation() {
-		return allocation;
-	}
+	private List<Allocation> allocations;
 
 	public void setAllocation(List<Allocation> allocation) {
 		this.allocation = allocation;
 	}
+	
 
 	public Long getId() {
 		return id;
@@ -73,7 +76,6 @@ public class Professor {
 		this.cpf = cpf;
 	}
 
-
 	public Departament getDepartment() {
 		return department;
 	}
@@ -82,27 +84,38 @@ public class Professor {
 		this.department = department;
 	}
 
+	@OneToMany(mappedBy = "professor")
+	private List<Allocation> allocation;
+
+	public List<Allocation> getAllocation() {
+		return allocation;
+	}
+
 	
 
-	public Professor(String name, String cpf, Departament department) {
-		this.name = name;
-		this.cpf = cpf;
-		this.department = department;
+	public Long getDepartmentId() {
+		return departmentId;
+	}
+
+	public void setDepartmentId(Long departmentId) {
+		this.departmentId = departmentId;
+	}
+
+	public List<Allocation> getAllocations() {
+		return allocations;
+	}
+
+	public void setAllocations(List<Allocation> allocations) {
+		this.allocations = allocations;
 	}
 
 	@Override
 	public String toString() {
-		return "Professor [id=" + id + ", name=" + name + ", cpf=" + cpf + ", department=" + department + "]";
-	}
-	
-	public Professor() {
-
+		return "Professor [id=" + id + ", name=" + name + ", cpf=" + cpf + ", departmentId=" + departmentId
+				+ ", department=" + department + ", allocations=" + allocations + ", allocation=" + allocation + "]";
 	}
 
 	
-	
-	
-	
-	
+
 
 }

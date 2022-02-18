@@ -11,7 +11,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 
-import com.project.professor.allocation.victor.entity.Course;
 import com.project.professor.allocation.victor.entity.Departament;
 
 @DataJpaTest
@@ -21,7 +20,7 @@ import com.project.professor.allocation.victor.entity.Departament;
 public class DepartamentRepositoryTest {
 	
 	@Autowired
-	DepartamentoRepository departamentoRepository;
+	DepartamentRepository departamentoRepository;
 	
 	@Test
 	public void findAll() {

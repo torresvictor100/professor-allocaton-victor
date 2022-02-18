@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.project.professor.allocation.victor.entity.Departament;
 
 @Repository
-public interface DepartamentoRepository extends JpaRepository<Departament, Long>{
+public interface DepartamentRepository extends JpaRepository<Departament, Long>{
 
 }
