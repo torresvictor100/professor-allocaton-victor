@@ -94,6 +94,10 @@ public class Professor {
 	public String toString() {
 		return "Professor [id=" + id + ", name=" + name + ", cpf=" + cpf + ", department=" + department + "]";
 	}
+	
+	public Professor() {
+
+	}
 
 	
 	

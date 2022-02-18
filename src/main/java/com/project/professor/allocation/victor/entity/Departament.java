@@ -53,6 +53,9 @@ public class Departament {
 		this.name = name;
 	}
 	
+	public Departament() {
+	}
+	
 	
 	
 	

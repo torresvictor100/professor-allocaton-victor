@@ -80,13 +80,13 @@ public class Allocation {
 	public Course getCourse() {
 		return course;
 	}
-	public void setCourseId(Course course) {
+	public void setCourse(Course course) {
 		this.course = course;
 	}
 	public Professor  getProfessor() {
 		return professor;
 	}
-	public void setProfessorId(Professor professor) {
+	public void setProfessor(Professor professor) {
 		this.professor = professor;
 	}
 	@Override
@@ -100,6 +100,10 @@ public class Allocation {
 		this.end = end;
 		this.course = course;
 		this.professor = professor;
+	}
+	
+	public Allocation() {
+		
 	}
 	
 	
