@@ -24,6 +24,12 @@ public class Course {
 	@OneToMany(mappedBy = "course")
 	private List<Allocation> allocation;
 	
+	public List<Allocation> getAllocation() {
+		return allocation;
+	}
+	public void setAllocation(List<Allocation> allocation) {
+		this.allocation = allocation;
+	}
 	public Long getId() {
 		return id;
 	}
