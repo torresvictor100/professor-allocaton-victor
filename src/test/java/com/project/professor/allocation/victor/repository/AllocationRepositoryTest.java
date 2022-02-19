@@ -64,7 +64,7 @@ public class AllocationRepositoryTest {
 
     @Test
     public void save_create() throws ParseException {
-        // Arrange
+
         Allocation allocation = new Allocation();
         allocation.setId(null);
         allocation.setDay(DayOfWeek.SUNDAY);

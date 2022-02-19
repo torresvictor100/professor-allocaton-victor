@@ -8,12 +8,10 @@ import org.springframework.stereotype.Repository;
 import com.project.professor.allocation.victor.entity.Professor;
 
 @Repository
-public interface ProfessorRepository extends JpaRepository<Professor, Long>{
-	
-	
-	List<Professor> findByDepartmentId(Long departmentId);
-	
-	List<Professor> findByNameContainingIgnoreCase(String name);
+public interface ProfessorRepository extends JpaRepository<Professor, Long> {
 
+    List<Professor> findByNameContainingIgnoreCase(String name);
 
+ 
+    List<Professor> findByDepartmentId(Long departmentId);
 }

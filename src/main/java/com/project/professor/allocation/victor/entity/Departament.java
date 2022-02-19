@@ -10,6 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Table(name = "department")
 public class Departament {
@@ -22,7 +27,11 @@ public class Departament {
 	@Column(name = "name", unique = true, nullable = false)
 	private String name;
 	
-	@OneToMany(mappedBy = "department")
+	
+	
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToMany(mappedBy = "department")
     private List<Professor> professors;
 	
 	

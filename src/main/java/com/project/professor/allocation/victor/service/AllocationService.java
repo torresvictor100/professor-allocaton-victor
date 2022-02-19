@@ -44,17 +44,6 @@ public class AllocationService {
 		return saveInternal(allocation);
 	}
 
-	private Allocation saveInternal(Allocation allocation) {
-		allocation = allocationRepository.save(allocation);
-
-		Professor professor = professorService.findById(allocation.getProfessorId());
-		allocation.setProfessor(professor);
-
-		Course course = courseService.findById(allocation.getCourseId());
-		allocation.setCourse(course);
-
-		return allocation;
-	}
 	
 	public Allocation update(Allocation allocation) {
 		Long id = allocation.getId();
@@ -73,5 +62,48 @@ public class AllocationService {
 	
 	public void deleteAll() {
 		allocationRepository.deleteAllInBatch();
+	}
+	
+	private Allocation saveInternal(Allocation allocation) {
+	    if (!isEndHourGreaterThanStartHour(allocation) || hasCollision(allocation)) {
+	        throw new RuntimeException();
+	    } else {
+	        allocation = allocationRepository.save(allocation);
+
+	        Professor professor = professorService.findById(allocation.getProfessorId());
+	        allocation.setProfessor(professor);
+
+	        Course course = courseService.findById(allocation.getCourseId());
+	        allocation.setCourse(course);
+
+	        return allocation;
+	    }
+	}
+	//aqui no caso é a regra de negocio que fala justamente que o inicio n pode ser depois do final
+	boolean isEndHourGreaterThanStartHour(Allocation allocation) {
+	    return allocation != null && allocation.getStart() != null && allocation.getEnd() != null
+	            && allocation.getEnd().compareTo(allocation.getStart()) > 0;
+	}
+
+	boolean hasCollision(Allocation newAllocation) {
+		boolean hasCollision = false;
+
+		List<Allocation> currentAllocations = allocationRepository.findByProfessorId(newAllocation.getProfessorId());
+
+		for (Allocation currentAllocation : currentAllocations) {
+			hasCollision = hasCollision(currentAllocation, newAllocation);
+			if (hasCollision) {
+				break;
+			}
+		}
+
+		return hasCollision;
+	}
+	//olhando a tabela verdade da para entende caso tudo for verdadeiro vira falso ou seja tem colisão
+	private boolean hasCollision(Allocation currentAllocation, Allocation newAllocation) {
+		return !currentAllocation.getId().equals(newAllocation.getId())//para ver se não são iguais
+				&& currentAllocation.getDay() == newAllocation.getDay()//para ver se é no mesmo dia
+				&& currentAllocation.getStart().compareTo(newAllocation.getEnd()) < 0
+				&& newAllocation.getStart().compareTo(currentAllocation.getEnd()) < 0;
 	}
 }

@@ -17,13 +17,15 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
+import com.fasterxml.jackson.databind.ser.std.DateSerializer;
 
 @Entity
-@Table(name = "allocation_professor")
+@Table(name = "allocation")
 public class Allocation {
 	
 	@Id
@@ -37,11 +39,18 @@ public class Allocation {
 	private DayOfWeek day;
 	
 	//não entendi muito bem perguntar
-	@Temporal(TemporalType.TIME)
-	@Column(name = "start", nullable = false)
+    @JsonFormat(pattern = "HH:mmZ")
+    @JsonSerialize(using = DateSerializer.class)
+    @JsonDeserialize(using = DateDeserializers.DateDeserializer.class)
+    @Temporal(TemporalType.TIME)
+    @Column(name = "start", nullable = false)
 	private Date start;
 	
-	@Temporal(TemporalType.TIME)
+
+    @JsonFormat(pattern = "HH:mmZ")
+    @JsonSerialize(using = DateSerializer.class)
+    @JsonDeserialize(using = DateDeserializers.DateDeserializer.class)
+    @Temporal(TemporalType.TIME)
     @Column(name = "end", nullable = false)
 	private Date end;
 	
@@ -53,12 +62,12 @@ public class Allocation {
     @Column(name = "course_id", nullable = false)
     private Long courseId;
 	
-	@OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "course_id", nullable = false, insertable = false, updatable = false)
 	private Course course;
 	
-	@OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "professor_id", nullable = false, insertable = false, updatable = false)
 	private Professor professor;

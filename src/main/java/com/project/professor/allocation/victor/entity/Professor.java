@@ -17,6 +17,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
 @Entity
 @Table(name = "professor")
 public class Professor {
@@ -37,7 +38,8 @@ public class Professor {
 
 	// id departamento?? não era apra ser um departament?? isso fala que vai remover
 	// em cascata todos os professores quando o departamento for removivo
-	@OnDelete(action = OnDeleteAction.CASCADE)
+	//@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "department_id", nullable = false, insertable = false, updatable = false)
 	private Departament department;
@@ -112,7 +114,7 @@ public class Professor {
 	@Override
 	public String toString() {
 		return "Professor [id=" + id + ", name=" + name + ", cpf=" + cpf + ", departmentId=" + departmentId
-				+ ", department=" + department + ", allocations=" + allocations + ", allocation=" + allocation + "]";
+				+ ", department=" + department + "]";
 	}
 
 	
