@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "department")
-public class Departament {
+public class Department {
 	
 	//não é int como eu fiz antes
 	@Id
@@ -61,11 +61,11 @@ public class Departament {
 	public String toString() {
 		return "Departament [id=" + id + ", name=" + name + "]";
 	}
-	public Departament(String name) {
+	public Department(String name) {
 		this.name = name;
 	}
 	
-	public Departament() {
+	public Department() {
 	}
 	
 	

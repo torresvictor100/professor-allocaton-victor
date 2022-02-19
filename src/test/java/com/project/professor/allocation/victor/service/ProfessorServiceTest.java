@@ -1,6 +1,5 @@
 package com.project.professor.allocation.victor.service;
 
-import java.text.ParseException;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -20,7 +19,7 @@ public class ProfessorServiceTest {
 	@Test
 	public void findAll() {
 
-		List<Professor> professor = professorService.findAll();
+		List<Professor> professor = professorService.findAll(null);
 		professor.forEach(System.out::println);
 	}
 	

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
-import com.project.professor.allocation.victor.entity.Departament;
+import com.project.professor.allocation.victor.entity.Department;
 
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application.properties")
@@ -20,7 +20,7 @@ public class DepartmentServiceTest {
 	@Test
 	public void findAll() {
 
-		List<Departament> department = departmentService.findAll();
+		List<Department> department = departmentService.findAll(null);
 		department.forEach(System.out::println);
 	}
 	
@@ -29,7 +29,7 @@ public class DepartmentServiceTest {
 
 		Long id = 1L;
 
-		Departament departament = departmentService.findById(id);
+		Department departament = departmentService.findById(id);
 
 		System.out.println(departament);
 	}
@@ -37,7 +37,7 @@ public class DepartmentServiceTest {
 	@Test
 	public void save() throws ParseException {
 
-		Departament departament = new Departament();
+		Department departament = new Department();
 		departament.setId(null);
 		departament.setName("test");
 		
@@ -49,7 +49,7 @@ public class DepartmentServiceTest {
 	@Test
 	public void update() throws ParseException {
 
-		Departament departament = new Departament();
+		Department departament = new Department();
 		departament.setId(1l);
 		departament.setName("test");
 		

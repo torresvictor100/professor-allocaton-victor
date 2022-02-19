@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.project.professor.allocation.victor.entity.Departament;
+import com.project.professor.allocation.victor.entity.Department;
 import com.project.professor.allocation.victor.repository.DepartamentRepository;
 
 @Service
@@ -17,20 +17,24 @@ public class DepartmentService {
 		this.departamentRepository = departamentRepository;
 	}
 	
-	public List<Departament> findAll() {
-		return departamentRepository.findAll();
+	public List<Department> findAll(String name) {
+		if (name == null) {
+            return departamentRepository.findAll();
+        } else {
+            return departamentRepository.findByNameContainingIgnoreCase(name);
+        }
 	}
 	
-	public Departament findById(Long id) {
+	public Department findById(Long id) {
 		return departamentRepository.findById(id).orElse(null);
 	}
 	
-	public Departament save(Departament departament) {
+	public Department save(Department departament) {
 		departament.setId(null);
 		return departament;
 	}
 		
-	public Departament update(Departament departament) {
+	public Department update(Department departament) {
 		Long id = departament.getId();
 		if (id != null && departamentRepository.existsById(id)) {
 			return departament;

@@ -42,7 +42,7 @@ public class Professor {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "department_id", nullable = false, insertable = false, updatable = false)
-	private Departament department;
+	private Department department;
 
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	@OnDelete(action = OnDeleteAction.CASCADE)
@@ -78,11 +78,11 @@ public class Professor {
 		this.cpf = cpf;
 	}
 
-	public Departament getDepartment() {
+	public Department getDepartment() {
 		return department;
 	}
 
-	public void setDepartment(Departament department) {
+	public void setDepartment(Department department) {
 		this.department = department;
 	}
 

@@ -11,7 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 
-import com.project.professor.allocation.victor.entity.Departament;
+import com.project.professor.allocation.victor.entity.Department;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
@@ -25,13 +25,13 @@ public class DepartamentRepositoryTest {
 	@Test
 	public void findAll() {
 		
-		List<Departament> departament = departamentoRepository.findAll();
+		List<Department> departament = departamentoRepository.findAll();
 		departament.forEach(System.out::println);
 	}
 	
 	@Test
 	public void save_create() throws ParseException {
-		Departament departament = new Departament();
+		Department departament = new Department();
 		departament.setId(null);
 		departament.setName("teste");	
 		
@@ -43,7 +43,7 @@ public class DepartamentRepositoryTest {
 	
 	@Test
 	public void save_update() throws ParseException {
-		Departament departament = new Departament();
+		Department departament = new Department();
 		departament.setId(1L);
 		departament.setName("teste");	
 		

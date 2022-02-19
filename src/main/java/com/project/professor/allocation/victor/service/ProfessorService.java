@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.project.professor.allocation.victor.entity.Allocation;
-import com.project.professor.allocation.victor.entity.Departament;
+import com.project.professor.allocation.victor.entity.Department;
 import com.project.professor.allocation.victor.entity.Professor;
 import com.project.professor.allocation.victor.repository.AllocationRepository;
 import com.project.professor.allocation.victor.repository.ProfessorRepository;
@@ -28,8 +28,12 @@ public class ProfessorService {
 
 	}
 
-	public List<Professor> findAll() {
-		return professorRepository.findAll();
+	public List<Professor> findAll(String name) {
+		  if (name == null) {
+	            return professorRepository.findAll();
+	        } else {
+	            return professorRepository.findByNameContainingIgnoreCase(name);
+	        }
 	}
 
 	public List<Professor> findByDepartmentId(Long departmentId) {
@@ -57,7 +61,7 @@ public class ProfessorService {
 	private Professor saveInternal(Professor professor) {
 		professor = professorRepository.save(professor);
 
-		Departament department = departmentService.findById(professor.getDepartmentId());
+		Department department = departmentService.findById(professor.getDepartmentId());
 		professor.setDepartment(department);
 
 		List<Allocation> allocations = allocationRepository.findByProfessorId(professor.getId()); //isso não entendi
