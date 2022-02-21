@@ -1,4 +1,4 @@
-package com.project.professor.allocation.victor.Controller;
+package com.project.professor.allocation.victor.controller;
 
 import java.util.List;
 
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.project.professor.allocation.victor.entity.Professor;
 import com.project.professor.allocation.victor.service.ProfessorService;
@@ -22,7 +23,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-@RequestMapping(path = "/professor")
+@RestController
+@RequestMapping(path = "/professors")
 public class ProfessorController {
 
 	ProfessorService professorService;
@@ -52,7 +54,7 @@ public class ProfessorController {
 		if (professor == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} else {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(professor, HttpStatus.OK);
 		}
 	}
 	
@@ -60,12 +62,12 @@ public class ProfessorController {
 	@ApiResponses({ @ApiResponse(code = 200, message = "OK"), @ApiResponse(code = 400, message = "Bad Request") })
 	@GetMapping(path = "department/{professor_id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Professor> findByIdDepartment(@PathVariable(name = "professor_id") Long id) {
+	public ResponseEntity<List<Professor>> findByIdDepartment(@PathVariable(name = "professor_id") Long id) {
 		List<Professor> professor = professorService.findByDepartmentId(id);
 		if (professor == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} else {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(professor, HttpStatus.OK);
 		}
 	}
 	

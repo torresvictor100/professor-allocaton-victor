@@ -1,4 +1,4 @@
-package com.project.professor.allocation.victor.Controller;
+package com.project.professor.allocation.victor.controller;
 
 import java.util.List;
 
@@ -53,7 +53,7 @@ public class DepartmentController {
 		if (department == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} else {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(department, HttpStatus.OK);
 		}
 	}
 

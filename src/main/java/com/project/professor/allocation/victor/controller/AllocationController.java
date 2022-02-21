@@ -1,4 +1,4 @@
-package com.project.professor.allocation.victor.Controller;
+package com.project.professor.allocation.victor.controller;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@RequestMapping(path = "/allocation")
+@RequestMapping(path = "/allocations")
 public class AllocationController {
 
 	AllocationService allocationService;
@@ -53,7 +53,7 @@ public class AllocationController {
 		if (allocation == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} else {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(allocation, HttpStatus.OK);
 		}
 	}
 	
@@ -61,12 +61,12 @@ public class AllocationController {
 	@ApiResponses({ @ApiResponse(code = 200, message = "OK"), @ApiResponse(code = 400, message = "Bad Request") })
 	@GetMapping(path = "allocation/{course_id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Allocation> findByIdCourse(@PathVariable(name = "course_id") Long id) {
+	public ResponseEntity<List<Allocation>> findByIdCourse(@PathVariable(name = "course_id") Long id) {
 		List<Allocation> allocation = allocationService.findByCourse(id);
 		if (allocation == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} else {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(allocation, HttpStatus.OK);
 		}
 	}
 
@@ -74,12 +74,12 @@ public class AllocationController {
 	@ApiResponses({ @ApiResponse(code = 200, message = "OK"), @ApiResponse(code = 400, message = "Bad Request") })
 	@GetMapping(path = "professor/{course_id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Allocation> findByIdProfessor(@PathVariable(name = "course_id") Long id) {
+	public ResponseEntity<List<Allocation>> findByIdProfessor(@PathVariable(name = "course_id") Long id) {
 		List<Allocation> allocation = allocationService.findByProfessor(id);
 		if (allocation == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} else {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(allocation, HttpStatus.OK);
 		}
 	}
 	
