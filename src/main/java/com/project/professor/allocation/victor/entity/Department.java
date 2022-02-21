@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Table(name = "department")
 public class Department {
 	
-	//não é int como eu fiz antes
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

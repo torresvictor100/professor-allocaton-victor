@@ -18,6 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -28,6 +29,7 @@ import com.fasterxml.jackson.databind.ser.std.DateSerializer;
 @Table(name = "allocation")
 public class Allocation {
 	
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -65,11 +67,13 @@ public class Allocation {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "course_id", nullable = false, insertable = false, updatable = false)
+    @JsonIgnoreProperties({"allocation"})
 	private Course course;
 	
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "professor_id", nullable = false, insertable = false, updatable = false)
+    @JsonIgnoreProperties({"allocation"})
 	private Professor professor;
 	
 	public Long getId() {
