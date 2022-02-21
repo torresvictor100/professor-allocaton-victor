@@ -18,10 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.professor.allocation.victor.entity.Allocation;
 import com.project.professor.allocation.victor.service.AllocationService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping(path = "/allocation")
 public class AllocationController {
-	
+
 	AllocationService allocationService;
 
 	public AllocationController(AllocationService allocationService) {
@@ -29,15 +33,21 @@ public class AllocationController {
 		this.allocationService = allocationService;
 	}
 	
+	@ApiOperation(value = "Find all allocation")
+	@ApiResponses({ @ApiResponse(code = 200, message = "OK") })
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
+	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<List<Allocation>> findAll() {
 		List<Allocation> allocation = allocationService.findAll();
 		return new ResponseEntity<>(allocation, HttpStatus.OK);
 	}
 	
+	
+	@ApiOperation(value = "Find a allocation by id")
+	@ApiResponses({ @ApiResponse(code = 200, message = "OK"), @ApiResponse(code = 400, message = "Bad Request"),
+			@ApiResponse(code = 404, message = "Not Found") })
 	@GetMapping(path = "/{allocation_id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
+	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<Allocation> findById(@PathVariable(name = "allocation_id") Long id) {
 		Allocation allocation = allocationService.findById(id);
 		if (allocation == null) {
@@ -47,8 +57,10 @@ public class AllocationController {
 		}
 	}
 	
+	@ApiOperation(value = "Find allocations by course")
+	@ApiResponses({ @ApiResponse(code = 200, message = "OK"), @ApiResponse(code = 400, message = "Bad Request") })
 	@GetMapping(path = "allocation/{course_id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
+	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<Allocation> findByIdCourse(@PathVariable(name = "course_id") Long id) {
 		List<Allocation> allocation = allocationService.findByCourse(id);
 		if (allocation == null) {
@@ -57,9 +69,11 @@ public class AllocationController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
+	@ApiOperation(value = "Find allocations by professor")
+	@ApiResponses({ @ApiResponse(code = 200, message = "OK"), @ApiResponse(code = 400, message = "Bad Request") })
 	@GetMapping(path = "professor/{course_id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
+	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<Allocation> findByIdProfessor(@PathVariable(name = "course_id") Long id) {
 		List<Allocation> allocation = allocationService.findByProfessor(id);
 		if (allocation == null) {
@@ -69,8 +83,10 @@ public class AllocationController {
 		}
 	}
 	
+	@ApiOperation(value = "Save a allocation")
+	@ApiResponses({ @ApiResponse(code = 201, message = "Created"), @ApiResponse(code = 400, message = "Bad Request") })
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.CREATED)
+	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<Allocation> save(@RequestBody Allocation allocation) {
 		try {
 			allocation = allocationService.save(allocation);
@@ -80,9 +96,13 @@ public class AllocationController {
 		}
 	}
 	
+	@ApiOperation(value = "Update a allocation")
+	@ApiResponses({ @ApiResponse(code = 200, message = "OK"), @ApiResponse(code = 400, message = "Bad Request"),
+			@ApiResponse(code = 404, message = "Not Found") })
 	@PutMapping(path = "/{allocation_id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Allocation> update(@PathVariable(name = "allocation_id") Long id, @RequestBody Allocation allocation) {
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<Allocation> update(@PathVariable(name = "allocation_id") Long id,
+			@RequestBody Allocation allocation) {
 		allocation.setId(id); // isso não entendi bem
 		try {
 			allocation = allocationService.update(allocation);
@@ -96,15 +116,19 @@ public class AllocationController {
 		}
 	}
 	
+	@ApiOperation(value = "Delete a department")
+	@ApiResponses({ @ApiResponse(code = 204, message = "No Content") })
 	@DeleteMapping(path = "/{allocation_id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public ResponseEntity<Void> deleteById(@PathVariable(name = "allocation_id") Long id) {
 		allocationService.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 	
+	@ApiOperation(value = "Delete all departments")
+	@ApiResponses({ @ApiResponse(code = 204, message = "No Content") })
 	@DeleteMapping
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public ResponseEntity<Void> deleteAll() {
 		allocationService.deleteAll();
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
