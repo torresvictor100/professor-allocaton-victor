@@ -30,6 +30,15 @@ public class CouseRepositoryTest {
 	}
 	
 	@Test
+    public void findById() {
+        Long id = 1L;
+        Course course = courseRepository.findById(id).orElse(null);
+
+        System.out.println(course);
+    }
+	
+	
+	@Test
 	public void save_create() throws ParseException {
 		Course course = new Course();
 		course.setId(null);

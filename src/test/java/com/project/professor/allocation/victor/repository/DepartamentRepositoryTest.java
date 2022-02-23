@@ -29,6 +29,16 @@ public class DepartamentRepositoryTest {
 		departament.forEach(System.out::println);
 	}
 	
+	  @Test
+	    public void findById() {
+	      
+	        Long id = 1L;
+
+	        Department departament = departamentoRepository.findById(id).orElse(null);
+
+	        System.out.println(departament);
+	    }
+	
 	@Test
 	public void save_create() throws ParseException {
 		Department departament = new Department();
